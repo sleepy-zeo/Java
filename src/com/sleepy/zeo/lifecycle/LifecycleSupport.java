@@ -1,4 +1,4 @@
-package com.sleepy.zeo;
+package com.sleepy.zeo.lifecycle;
 
 public final class LifecycleSupport {
 

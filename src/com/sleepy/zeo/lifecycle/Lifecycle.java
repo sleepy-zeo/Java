@@ -1,4 +1,4 @@
-package com.sleepy.zeo;
+package com.sleepy.zeo.lifecycle;
 
 /**
  * 对象是具有生命周期的，从初始化、运行、回收等 会经历几个不同的阶段，于是我们就可以抽象出来Lifecycle

@@ -1,8 +1,8 @@
-package com.sleepy.zeo.demo;
+package com.sleepy.zeo.lifecycle.demo;
 
-import com.sleepy.zeo.Lifecycle;
-import com.sleepy.zeo.LifecycleEvent;
-import com.sleepy.zeo.LifecycleListener;
+import com.sleepy.zeo.lifecycle.Lifecycle;
+import com.sleepy.zeo.lifecycle.LifecycleEvent;
+import com.sleepy.zeo.lifecycle.LifecycleListener;
 
 public class Application {
 
@@ -25,8 +25,8 @@ public class Application {
                 if (LifecycleEvent.TYPE_BEFORE_START.equals(event.getType())) {
                     System.out.println("start to boot...");
                     Lifecycle carLifecycle = event.getLifecycle();
-                    if(carLifecycle instanceof Car){
-                        System.out.println(((Car)carLifecycle).getLeftLight().getName());
+                    if (carLifecycle instanceof Car) {
+                        System.out.println(((Car) carLifecycle).getLeftLight().getName());
                     }
                 }
                 if (LifecycleEvent.TYPE_AFTER_START.equals(event.getType())) {

@@ -1,9 +1,9 @@
-package com.sleepy.zeo.demo;
+package com.sleepy.zeo.lifecycle.demo;
 
-import com.sleepy.zeo.Lifecycle;
-import com.sleepy.zeo.LifecycleEvent;
-import com.sleepy.zeo.LifecycleListener;
-import com.sleepy.zeo.LifecycleSupport;
+import com.sleepy.zeo.lifecycle.Lifecycle;
+import com.sleepy.zeo.lifecycle.LifecycleEvent;
+import com.sleepy.zeo.lifecycle.LifecycleListener;
+import com.sleepy.zeo.lifecycle.LifecycleSupport;
 
 public class Car implements Lifecycle {
 
