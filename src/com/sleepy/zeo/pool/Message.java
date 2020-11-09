@@ -2,6 +2,7 @@ package com.sleepy.zeo.pool;
 
 public class Message {
     private static final int MAX_POOL_SIZE = 64;
+
     private static Message sPool;
     private static int sPoolSize = 0;
     private static final Object sPoolLock = new Object();
