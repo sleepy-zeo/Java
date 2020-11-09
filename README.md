@@ -28,7 +28,7 @@ LifecycleEvent -- |
 #### Circuit
 
 ```
-					fireLifecycleEvents
+                    fireLifecycleEvents
 start or stop -------------------------------> lifecycleListeners
 
 ```
