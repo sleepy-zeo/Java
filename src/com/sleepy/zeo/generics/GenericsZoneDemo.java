@@ -28,6 +28,40 @@ public class GenericsZoneDemo {
         }
     }
 
+    /*
+
+    java泛型
+
+public class Configurer<T> {
+
+	void init(T builder);
+
+	void configure(T builder);
+
+}
+
+
+public interface Configurer<B extends SecurityBuilder> {
+
+	void init(B builder);
+
+	void configure(B builder);
+
+}
+
+
+T
+
+?
+
+T extends SecurityBuilder
+T super SecurityBuilder
+
+? extends SecurityBuilder
+? super SecurityBuilder
+
+     */
+
 
 
     public static void main(String[] args) {
