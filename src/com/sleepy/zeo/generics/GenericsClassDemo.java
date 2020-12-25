@@ -2,8 +2,7 @@ package com.sleepy.zeo.generics;
 
 public class GenericsClassDemo {
 
-    public abstract static class Father<T1, T2> {
-
+    abstract static class Father<T1, T2> {
         public abstract void printAge(T1 age);
         public abstract void printName(T2 name);
     }
@@ -51,7 +50,8 @@ public class GenericsClassDemo {
         }
     }
 
-    // 等价于Father<Object, Object>
+    // 等价于
+    // static class extends Father<Object, Object>
     static class C4 extends Father {
 
         @Override
@@ -64,22 +64,4 @@ public class GenericsClassDemo {
             System.out.println("C4 name:" + name);
         }
     }
-
-    public static void main(String[] args) {
-        C1<Integer, String, Long> c1 = new C1<>();
-        c1.printAge(12);
-        c1.printName("steven");
-        c1.printPhone(15313967539L);
-
-        C4 c4 = new C4();
-        c4.printAge("age");
-        c4.printName("name");
-
-        Father<Integer,String> father = new C1<Integer, String,Long>();
-        father.printAge(12);
-        father.printName("steven");
-        ((C1) father).printPhone(15313967539L);
-        ((C1) father).printPhone("hhh");
-    }
-
 }

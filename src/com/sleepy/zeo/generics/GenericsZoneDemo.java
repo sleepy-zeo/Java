@@ -1,11 +1,11 @@
 package com.sleepy.zeo.generics;
 
-import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 
 public class GenericsZoneDemo {
 
+    // TYPE 1. 简单的泛型边界
+    // 限制类型T必须是Number的子类，否则报错
     static class Manager<T extends Number> {
 
         void print(T t) {
@@ -13,56 +13,67 @@ public class GenericsZoneDemo {
         }
     }
 
-    static class Company<T extends Comparator<T>> {
+    static class Password {
 
-        void print(T t) {
-            System.out.println("print company: " + t);
-        }
-    }
-
-    static class IntegerComparator implements Comparator<IntegerComparator>{
+        String originPassword;
+        String encodedPassword;
+        boolean configured;
 
         @Override
-        public int compare(IntegerComparator o1, IntegerComparator o2) {
-            return 0;
+        public String toString() {
+            return "Password[" +
+                    "originPassword='" + originPassword + '\'' +
+                    ", encodedPassword='" + encodedPassword + '\'' +
+                    ", configured=" + configured +
+                    ']';
         }
     }
 
-    /*
+    // 对类型T的init和config
+    interface Configurer<T> {
+        void init(T data);
+        void config(T data);
+    }
 
-    java泛型
+    // TYPE 2. 复杂的泛型边界
+    // Comparator<D>
+    //      D类型数据的相关配置
+    // C extends Comparator<D>
+    //      C具有'D类型数据的相关配置'的功能的类
+    static class Controller<D extends Password, C extends Configurer<D>> {
 
-public class Configurer<T> {
+        private D data;
+        private C configurer;
 
-	void init(T builder);
+        public Controller(D data, C configurer) {
+            this.data = data;
+            this.configurer = configurer;
+        }
 
-	void configure(T builder);
+        void start() {
+            configurer.init(data);
+            configurer.config(data);
 
-}
+            System.out.println(data);
+        }
+    }
 
+    static class SecurityConfigurer<T extends Password> implements Configurer<T> {
 
-public interface Configurer<B extends SecurityBuilder> {
+        @Override
+        public void init(T data) {
+            System.out.println("init data");
+            // TODO: 将T限制为T extends XX而不是默认的T extends Object
+            data.encodedPassword = "&&" + data.originPassword + "@#$%";
+        }
 
-	void init(B builder);
-
-	void configure(B builder);
-
-}
-
-
-T
-
-?
-
-T extends SecurityBuilder
-T super SecurityBuilder
-
-? extends SecurityBuilder
-? super SecurityBuilder
-
-     */
-
-
+        @Override
+        public void config(T data) {
+            System.out.println("config data");
+            // TODO: 将T限制为T extends XX而不是默认的T extends Object
+            data.configured = true;
+        }
+    }
 
     public static void main(String[] args) {
 
@@ -72,12 +83,9 @@ T super SecurityBuilder
         Manager<Integer> manager2 = new Manager<>();
         manager2.print(12);
 
-        List<String> list = new ArrayList<>();
-        list.add("steven");
-        list.add("sleepy");
-
-
-        Company<IntegerComparator> company2 = new Company<IntegerComparator>();
+        SecurityConfigurer<Password> securityConfigurer = new SecurityConfigurer<>();
+        Controller<Password, SecurityConfigurer<Password>> controller = new Controller<>(new Password(), securityConfigurer);
+        controller.start();
 
     }
 }
