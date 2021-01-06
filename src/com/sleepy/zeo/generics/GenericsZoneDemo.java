@@ -1,15 +1,13 @@
 package com.sleepy.zeo.generics;
 
-import java.util.List;
-
 public class GenericsZoneDemo {
 
-    // TYPE 1. 简单的泛型边界
+    // ==================== TYPE 1. 简单的泛型边界 ====================
     // 限制类型T必须是Number的子类，否则报错
-    static class Manager<T extends Number> {
+    static class Manager<N extends Number> {
 
-        void print(T t) {
-            System.out.println("print manager: " + t);
+        void print(N n) {
+            System.out.println("print manager: " + n);
         }
     }
 
@@ -28,24 +26,37 @@ public class GenericsZoneDemo {
                     ']';
         }
     }
+    // ==================== TYPE 1. 简单的泛型边界 ====================
 
-    // 对类型T的init和config
-    interface Configurer<T> {
-        void init(T data);
-        void config(T data);
+    // ==================== TYPE 2. 复杂的泛型边界 ====================
+    interface Configurer<P> {
+        void init(P data);
+        void config(P data);
     }
 
-    // TYPE 2. 复杂的泛型边界
-    // Comparator<D>
-    //      D类型数据的相关配置
-    // C extends Comparator<D>
-    //      C具有'D类型数据的相关配置'的功能的类
-    static class Controller<D extends Password, C extends Configurer<D>> {
+    static class SecurityConfigurer<P extends Password> implements Configurer<P> {
 
-        private D data;
+        @Override
+        public void init(P data) {
+            System.out.println("init data");
+            // TODO: 将T限制为T extends XX而不是默认的T extends Object
+            data.encodedPassword = "&&" + data.originPassword + "@#$%";
+        }
+
+        @Override
+        public void config(P data) {
+            System.out.println("config data");
+            // TODO: 将T限制为T extends XX而不是默认的T extends Object
+            data.configured = true;
+        }
+    }
+
+    static class Controller<P extends Password, C extends Configurer<P>> {
+
+        private P data;
         private C configurer;
 
-        public Controller(D data, C configurer) {
+        public Controller(P data, C configurer) {
             this.data = data;
             this.configurer = configurer;
         }
@@ -57,23 +68,7 @@ public class GenericsZoneDemo {
             System.out.println(data);
         }
     }
-
-    static class SecurityConfigurer<T extends Password> implements Configurer<T> {
-
-        @Override
-        public void init(T data) {
-            System.out.println("init data");
-            // TODO: 将T限制为T extends XX而不是默认的T extends Object
-            data.encodedPassword = "&&" + data.originPassword + "@#$%";
-        }
-
-        @Override
-        public void config(T data) {
-            System.out.println("config data");
-            // TODO: 将T限制为T extends XX而不是默认的T extends Object
-            data.configured = true;
-        }
-    }
+    // ==================== TYPE 2. 复杂的泛型边界 ====================
 
     public static void main(String[] args) {
 
